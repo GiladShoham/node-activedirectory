@@ -396,7 +396,7 @@ ad.getGroupMembershipForGroup(groupName, function(err, groups) {
 ---------------------------------------
 
 <a name="find" />
-### find(opts, callback)
+### find(opts, includeMembership, callback)
 
 Perform a generic search for the specified LDAP query filter. This function will return both
 groups and users that match the specified filter. Any results not recognized as a user or group
@@ -404,6 +404,7 @@ groups and users that match the specified filter. Any results not recognized as 
 
 __Arguments__
 * opts - Optional LDAP query string parameters to execute. { scope: '', filter: '', attributes: [ '', '', ... ], sizeLimit: 0, timelimit: 0 }. Optionally, if only a string is provided, then the string is assumed to be an LDAP filter
+* includeMembership - Indicates if the request should also retrieve the group memberships for the users and groups. Default = false;
 * callback - The callback to execute when completed. callback(err: {Object}, groups: {Array[Group]})
 
 __Example__
@@ -548,7 +549,7 @@ ad.findUsers(query, true, function(err, users) {
 ---------------------------------------
 
 <a name="findGroup" />
-### findGroup(opts, groupName, callback)
+### findGroup(opts, groupName, includeMembership, callback)
 
 Looks up or find a group by common name (CN) which is required to be unique in Active Directory or optionally by the distinguished name. Supports groups with range retrieval specifiers. The following attributes are returned by default for the group:
 
@@ -558,6 +559,7 @@ __Arguments__
 
 * opts - Optional LDAP query string parameters to execute. { scope: '', filter: '', attributes: [ '', '', ... ], sizeLimit: 0, timelimit: 0 }
 * groupName -  The group (cn) to retrieve information about. Optionally can pass in the distinguishedName (dn) of the group to retrieve.
+* includeMembership - Indicates if the request should also retrieve the group memberships for the group. Default = false;
 * callback(err, group) - The callback to execute when completed. callback(err: {Object}, group: {Group})
 
 
@@ -587,13 +589,14 @@ ad.findGroup(groupName, function(err, group) {
 ---------------------------------------
 
 <a name="findGroups" />
-### findGroups(opts, callback)
+### findGroups(opts, includeMembership, callback)
 
 Perform a generic search for groups that match the specified filter. The default LDAP filter for groups is
 specified as (&(objectClass=group)(!(objectClass=computer))(!(objectClass=user))(!(objectClass=person)))
 
 __Arguments__
 * opts - Optional LDAP query string parameters to execute. { scope: '', filter: '', attributes: [ '', '', ... ], sizeLimit: 0, timelimit: 0 }. Optionally, if only a string is provided, then the string is assumed to be an LDAP filter that will be appended as the last parameter in the default LDAP filter.
+* includeMembership - Indicates if the request should also retrieve the group memberships for the groups. Default = false;
 * callback - The callback to execute when completed. callback(err: {Object}, groups: {Array[Group]})
 
 __Example__
